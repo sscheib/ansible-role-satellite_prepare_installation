@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: 'satellite_prepare_installation'
+  namespace: 'sscheib'
+  author: 'Steffen Scheib'
+  description: 'Prepare a Red Hat Enterprise Linux host for a Satellite installation'
+  issue_tracker_url: 'https://github.com/sscheib/ansible-role-satellite_prepare_installation/issues'
+  license: 'GPL-2.0-or-later'
+  min_ansible_version: '2.14'
+  platforms:
+    - name: 'EL'
+      versions:
+        - '8'
+
+  galaxy_tags:
+    - 'satellite'
+    - 'rhel'
+    - 'katello'
+dependencies: []
+...

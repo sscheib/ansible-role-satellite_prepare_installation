@@ -1,0 +1,25 @@
+---
+- name: 'firewalld | Configure firewalld ports'
+  ansible.posix.firewalld:
+    zone: "{{ _t_port.zone | default('public') }}"
+    port: '{{ _t_port.port }}'
+    state: 'enabled'
+    permanent: true
+    immediate: true
+  become: true
+  loop: '{{ _sat_firewalld_ports }}'
+  loop_control:
+    loop_var: '_t_port'
+
+- name: 'firewalld | Configure firewalld services'
+  ansible.posix.firewalld:
+    zone: "{{ _t_service.zone | default('public') }}"
+    service: '{{ _t_service.name }}'
+    state: 'enabled'
+    permanent: true
+    immediate: true
+  become: true
+  loop: '{{ _sat_firewalld_services }}'
+  loop_control:
+    loop_var: '_t_service'
+...

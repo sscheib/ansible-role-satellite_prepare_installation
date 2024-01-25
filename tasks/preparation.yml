@@ -1,0 +1,77 @@
+---
+- name: 'preparation | Ensure chrony is installed: {{ _sat_chrony_package_name }}'
+  ansible.builtin.package:
+    name: '{{ _sat_chrony_package_name }}'
+    state: 'present'
+  become: true
+
+- name: 'preparation | Ensure chrony is enabled and started: {{ _sat_chrony_systemd_service_name }}'
+  ansible.builtin.service:
+    name: '{{ _sat_chrony_systemd_service_name }}'
+    state: 'started'
+    enabled: true
+  become: true
+
+- name: 'preparation | Ensure the sos package is installed: {{ _sat_sos_package_name }}'
+  ansible.builtin.package:
+    name: '{{ _sat_sos_package_name }}'
+    state: 'present'
+  become: true
+  when:
+    - '_sat_install_sos_package is defined'
+    - '_sat_install_sos_package'
+
+- name: 'preparation | Check if the Satellite dnf module is enabled'
+  ansible.builtin.shell:
+    # below statement surpresses the error if no lines are found, as grep
+    # is exiting with:
+    # 0 if lines are found
+    # 1 if no lines are found
+    # >1 on an error
+    #
+    # the [[ $? == 1 ]] simply turns 1 into 0 as it will only match for 1 :>
+    cmd: >-
+      set -o pipefail; dnf module list --enabled |
+      awk '{print $1}' |
+      grep {{ _sat_dnf_module_regexp }} || [[ $? == 1 ]]
+  become: true
+  changed_when: false
+  register: '__t_satellite_module'
+
+- name: 'preparation | Enable the Satellite dnf module'
+  ansible.builtin.command:
+    cmd: 'dnf module enable -y {{ _sat_dnf_module_name }}'
+  become: true
+  changed_when: true
+  when: >-
+    __t_satellite_module.stdout_lines |
+    select('match', _sat_dnf_module_regexp) |
+    length == 0
+
+  # Satellite requires all packages to be up-to-date prior to installing
+- name: 'preparation | Update all packages'  # noqa: package-latest
+  ansible.builtin.package:
+    name: '*'
+    state: 'latest'
+    update_cache: true
+  become: true
+  register: '_t_update'
+  when:
+    - '_sat_update_all_packages is defined'
+    - '_sat_update_all_packages'
+
+- name: 'preparation | Ensure the Satellite package is installed: {{ _sat_package_name }}'
+  ansible.builtin.package:
+    name: '{{ _sat_package_name }}'
+    update_cache: true
+  become: true
+
+- name: 'preparation | Reboot the server'
+  ansible.builtin.reboot:
+    reboot_timeout: '{{ _sat_reboot_timeout }}'
+  when:
+    - '_t_update.changed is defined'
+    - '_t_update.changed'
+    - '_sat_reboot_satellite_after_update is defined'
+    - '_sat_reboot_satellite_after_update'
+...

@@ -1,0 +1,49 @@
+---
+# firewalld ports to open on the Satellite
+_sat_firewalld_ports: '{{ sat_firewalld_ports | default(_def_sat_firewalld_ports) }}'
+
+# firewalld services to open on the Satellite
+_sat_firewalld_services: '{{ sat_firewalld_services | default(_def_sat_firewalld_services) }}'
+
+# name of the chrony package
+_sat_chrony_package_name: '{{ sat_chrony_package_name | default(_def_sat_chrony_package_name) }}'
+
+# whether to install the sos package
+_sat_install_sos_package: '{{ sat_install_sos_package | default(_def_sat_install_sos_package) }}'
+
+# name of the sos package
+_sat_sos_package_name: '{{ sat_sos_package_name | default(_def_sat_sos_package_name) }}'
+
+# name of the chrony systemd service
+_sat_chrony_systemd_service_name: >-
+  {{
+    sat_chrony_systemd_service_name | default(_def_sat_chrony_systemd_service_name)
+  }}
+
+# regular expression to search for the Satellite dnf module
+_sat_dnf_module_regexp: '{{ sat_dnf_module_regexp | default(_def_sat_dnf_module_regexp) }}'
+
+# Satellite dnf module name
+_sat_dnf_module_name: '{{ sat_dnf_module_name | default(_def_sat_dnf_module_name) }}'
+
+# whether to update all packages prior to installing the Satellite package
+_sat_update_all_packages: '{{ sat_update_all_packages | default(_def_sat_update_all_packages) }}'
+
+# name of the Satellite package to install
+_sat_package_name: '{{ sat_package_name | default(_def_sat_package_name) }}'
+
+# whether to reboot the Satellite after packages where updated
+# it is intentionally not checked whether the system actually needs to reboot,
+# as foreman-protector will exclude all packages and the result may be inaccurate
+# when using needs-restarting
+_sat_reboot_satellite_after_update: >-
+  {{
+    sat_reboot_satellite_after_update | default(_def_sat_reboot_satellite_after_update)
+  }}
+
+# maximum seconds to wait for the host to come up again after rebooting
+_sat_reboot_timeout: '{{ sat_reboot_timeout | default(_def_sat_reboot_timeout) }}'
+
+# whether to quiet assert
+_sat_quiet_assert: '{{ sat_quiet_assert | default(_def_sat_quiet_assert) }}'
+...

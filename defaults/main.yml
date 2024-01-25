@@ -1,0 +1,74 @@
+---
+# firewalld ports to open on the Satellite
+_def_sat_firewalld_ports:
+  - port: '1883/tcp'
+    zone: 'public'
+
+  - port: '5646-5647/tcp'
+    zone: 'public'
+
+  - port: '5910-5930/tcp'
+    zone: 'public'
+
+  - port: '8000/tcp'
+    zone: 'public'
+
+  - port: '8140/tcp'
+    zone: 'public'
+
+  - port: '9090/tcp'
+    zone: 'public'
+
+# firewalld services to open on the Satellite
+_def_sat_firewalld_services:
+  - name: 'dns'
+    zone: 'public'
+
+  - name: 'dhcp'
+    zone: 'public'
+
+  - name: 'tftp'
+    zone: 'public'
+
+  - name: 'http'
+    zone: 'public'
+
+  - name: 'https'
+    zone: 'public'
+
+# name of the chrony package
+_def_sat_chrony_package_name: 'chrony'
+
+# name of the chrony systemd service
+_def_sat_chrony_systemd_service_name: 'chronyd'
+
+# whether to install the sos package
+_def_sat_install_sos_package: true
+
+# name of the sos package
+_def_sat_sos_package_name: 'sos'
+
+# regular expression to search for the Satellite dnf module
+_def_sat_dnf_module_regexp: '^satellite$'
+
+# Satellite dnf module name
+_def_sat_dnf_module_name: 'satellite:el8'
+
+# whether to update all packages prior to installing the Satellite package
+_def_sat_update_all_packages: true
+
+# name of the Satellite package to install
+_def_sat_package_name: 'satellite'
+
+# whether to reboot the Satellite after packages where updated
+# it is intentionally not checked whether the system actually needs to reboot,
+# as foreman-protector will exclude all packages and the result may be inaccurate
+# when using needs-restarting
+_def_sat_reboot_satellite_after_update: true
+
+# maximum seconds to wait for the host to come up again after rebooting
+_def_sat_reboot_timeout: 1200
+
+# whether to quiet assert
+_def_sat_quiet_assert: false
+...
