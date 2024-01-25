@@ -21,7 +21,7 @@
     - '_sat_install_sos_package is defined'
     - '_sat_install_sos_package'
 
-- name: 'preparation | Check if the Satellite dnf module is enabled'
+- name: 'preparation | Check if the Satellite dnf module is enabled: {{ _sat_dnf_module_name }}'
   ansible.builtin.shell:
     # below statement surpresses the error if no lines are found, as grep
     # is exiting with:
@@ -38,7 +38,7 @@
   changed_when: false
   register: '__t_satellite_module'
 
-- name: 'preparation | Enable the Satellite dnf module'
+- name: 'preparation | Enable the Satellite dnf module: {{ _sat_dnf_module_name }}'
   ansible.builtin.command:
     cmd: 'dnf module enable -y {{ _sat_dnf_module_name }}'
   become: true
