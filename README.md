@@ -1,3 +1,4 @@
+[![ansible-lint](https://github.com/sscheib/ansible-role-satellite_prepare_installation/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/sscheib/ansible-role-satellite_prepare_installation/actions/workflows/ansible-lint.yml) [![Publish latest release to Ansible Galaxy](https://github.com/sscheib/ansible-role-satellite_prepare_installation/actions/workflows/ansible-galaxy.yml/badge.svg)](https://github.com/sscheib/ansible-role-satellite_prepare_installation/actions/workflows/ansible-galaxy.yml)
 
 satellite_prepare_installation
 =========
@@ -58,7 +59,7 @@ rhc_insights:
 Requirements
 ------------
 
-This role needs the system to be registered to the Red Hat Content Delivery Network (CDN) with enabled Red Hat Satellite repositories in order to to install necessary packages.
+This role needs the system to be registered to the Red Hat Customer Portal with enabled Red Hat Satellite repositories in order to to install necessary packages.
 
 Role Variables
 --------------
@@ -102,7 +103,11 @@ sat_firewalld_ports:
     zone: 'public'
 ```
 
-Both `port` and `zone` are required attributes for each list element.
+Please note:
+- The ports are taken from the [Satellite documentation](https://access.redhat.com/documentation/de-de/red_hat_satellite/6.14/html/installing_satellite_server_in_a_connected_network_environment/preparing_your_environment_for_installation_satellite#supported-browsers_satellite)
+- Both `port` and `zone` are required attributes for each list element
+- The format the ports can be specified is either PORT/PROTOCOL or for a range of ports PORT-PORT/PROTOCOL
+- The ports are passed to the `ansible.posix.firewalld` module
 
 ## Variable `sat_firewalld_services`
 
@@ -125,7 +130,10 @@ sat_firewalld_services:
     zone: 'public'
 ```
 
-Both `name` and `zone` are required attributes for each list element.
+Please note:
+- The services are derived from the ports specified in the [Satellite documentation](https://access.redhat.com/documentation/de-de/red_hat_satellite/6.14/html/installing_satellite_server_in_a_connected_network_environment/preparing_your_environment_for_installation_satellite#supported-browsers_satellite)
+- Both `name` and `zone` are required attributes for each list element
+- The services are passed to the `ansible.posix.firewalld` module, so the services *need to exist* prior of using them (the above services exist already by default)
 
 Dependencies
 ------------
@@ -190,7 +198,6 @@ Example Playbook
         sat_reboot_satellite_after_update: true
         sat_reboot_timeout: 1200
         sat_quiet_assert: false
-        
 ...
 ```
 
