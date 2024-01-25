@@ -106,7 +106,7 @@ sat_firewalld_ports:
 Please note:
 - The ports are taken from the [Satellite documentation](https://access.redhat.com/documentation/de-de/red_hat_satellite/6.14/html/installing_satellite_server_in_a_connected_network_environment/preparing_your_environment_for_installation_satellite#supported-browsers_satellite)
 - Both `port` and `zone` are required attributes for each list element
-- The format the ports can be specified is either PORT/PROTOCOL or for a range of ports PORT-PORT/PROTOCOL
+- The format the ports can be specified in is either PORT/PROTOCOL or for a range of ports PORT-PORT/PROTOCOL
 - The ports are passed to the `ansible.posix.firewalld` module
 
 ## Variable `sat_firewalld_services`
