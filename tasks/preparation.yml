@@ -38,7 +38,7 @@
   changed_when: false
   register: '__t_satellite_module'
 
-- name: 'preparation | Enable the Satellite dnf module'
+- name: 'preparation | Enable the Satellite dnf module: {{ _sat_dnf_module_name }}'
   ansible.builtin.command:
     cmd: 'dnf module enable -y {{ _sat_dnf_module_name }}'
   become: true
