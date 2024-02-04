@@ -44,6 +44,9 @@ _sat_reboot_satellite_after_update: >-
 # maximum seconds to wait for the host to come up again after rebooting
 _sat_reboot_timeout: '{{ sat_reboot_timeout | default(_def_sat_reboot_timeout) }}'
 
+# seconds to wait after the reboot command before attempting to validate the system rebooted successfully
+_sat_post_reboot_delay: '{{ sat_post_reboot_delay | default(_def_sat_post_reboot_delay) }}'
+
 # whether to quiet assert
 _sat_quiet_assert: '{{ sat_quiet_assert | default(_def_sat_quiet_assert) }}'
 ...

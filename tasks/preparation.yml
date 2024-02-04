@@ -69,6 +69,7 @@
 - name: 'preparation | Reboot the server'
   ansible.builtin.reboot:
     reboot_timeout: '{{ _sat_reboot_timeout }}'
+    post_reboot_delay: '{{ _sat_post_reboot_delay }}'
   when:
     - '_t_update.changed is defined'
     - '_t_update.changed'

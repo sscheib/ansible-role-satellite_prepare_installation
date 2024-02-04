@@ -77,6 +77,7 @@ Role Variables
 | `sat_package_name`                           | `satellite`                  | false    | Name of the Satellite package to install                                       |
 | `sat_reboot_satellite_after_update`          | `true`                       | false    | Whether to reboot the Satellite after packages where updated                   |
 | `sat_reboot_timeout`                         | `1200`                       | false    | Maximum seconds to wait for the host to come up again after rebooting          |
+| `sat_post_reboot_delay`                      | `30`                         | false    | Seconds to wait after the reboot command before validating the system reboot   |
 | `sat_quiet_assert`                           | `false`                      | false    | Whether to quiet assert                                                        |
 
 ## Variable `sat_firewalld_ports`

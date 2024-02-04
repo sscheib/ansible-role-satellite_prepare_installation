@@ -69,6 +69,9 @@ _def_sat_reboot_satellite_after_update: true
 # maximum seconds to wait for the host to come up again after rebooting
 _def_sat_reboot_timeout: 1200
 
+# seconds to wait after the reboot command before attempting to validate the system rebooted successfully
+_def_sat_post_reboot_delay: 30
+
 # whether to quiet assert
 _def_sat_quiet_assert: false
 ...
