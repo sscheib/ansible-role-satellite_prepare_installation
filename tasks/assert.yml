@@ -48,6 +48,7 @@
     quiet: '{{ _sat_quiet_assert }}'
   loop:
     - '_sat_reboot_timeout'
+    - '_sat_post_reboot_delay'
   loop_control:
     loop_var: '__t_var'
 
